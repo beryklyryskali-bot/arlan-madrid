@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Проект</title>
+    <title>Мой Проект — Услуги и Анимации</title>
     <style>
         * {
             box-sizing: border-box;
@@ -30,7 +30,7 @@
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000; /* Очень высокий z-index */
             border-bottom: 1px solid #1e293b;
         }
 
@@ -56,20 +56,49 @@
 
         main {
             flex: 1;
+            position: relative;
+        }
+
+        /* Фоновое видео (опционально) */
+        #video-bg {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -100;
+            opacity: 0.15; /* Очень прозрачное */
+            object-fit: cover;
         }
 
         /* Управление отображением вкладок */
         .tab-content {
             display: none;
-            animation: fadeIn 0.4s ease-in-out;
+            position: relative;
+            z-index: 10;
         }
 
         .tab-content.active {
             display: block;
         }
 
+        /* Анимации появления */
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out forwards;
+            opacity: 0;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+            opacity: 0;
+        }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -80,12 +109,12 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 80px 20px;
-            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            padding: 100px 20px;
+            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
         }
 
         .hero h1 {
-            font-size: 2.8rem;
+            font-size: 3.2rem;
             margin-bottom: 20px;
             background: linear-gradient(to right, #38bdf8, #818cf8);
             -webkit-background-clip: text;
@@ -93,79 +122,100 @@
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #94a3b8;
-            max-width: 600px;
-            margin-bottom: 30px;
+            max-width: 650px;
+            margin-bottom: 40px;
         }
 
         .btn {
             background: #25d366;
             color: #0f172a;
-            padding: 12px 30px;
+            padding: 14px 35px;
             border: none;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            transition: transform 0.2s, background 0.3s;
+            transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
         }
 
         .btn:hover {
             background: #1ebc57;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
         }
 
-        /* Карточки */
+        /* Услуги (Галерея карточек) */
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #38bdf8;
+            text-align: center;
+        }
+
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 60px 8%;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
         }
 
         .card {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 12px;
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(5px);
+            padding: 40px;
+            border-radius: 16px;
             border: 1px solid #334155;
-            transition: transform 0.3s, border-color 0.3s;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            cursor: pointer;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: #38bdf8;
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .card h3 {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             color: #f1f5f9;
+            font-size: 1.4rem;
         }
 
         .card p {
             color: #94a3b8;
-            font-size: 0.95rem;
+            font-size: 1rem;
         }
 
         /* Текстовые секции */
-        .section-container {
-            max-width: 900px;
+        .text-block {
+            max-width: 800px;
             margin: 0 auto;
-            padding: 60px 20px;
+            background: rgba(30, 41, 59, 0.4);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #1e293b;
         }
 
-        .section-container h2 {
-            font-size: 2.2rem;
-            margin-bottom: 20px;
-            color: #38bdf8;
-        }
-
-        .section-container p {
-            color: #94a3b8;
-            font-size: 1.1rem;
-            margin-bottom: 20px;
+        .text-block p {
+            color: #cbd5e1;
+            font-size: 1.15rem;
+            margin-bottom: 25px;
         }
 
         .contact-box {
@@ -173,12 +223,13 @@
             padding: 30px;
             border-radius: 12px;
             border: 1px solid #334155;
-            margin-top: 20px;
+            margin-top: 30px;
+            text-align: center;
         }
 
         .contact-item {
             margin-bottom: 15px;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         .contact-item strong {
@@ -187,14 +238,32 @@
 
         footer {
             text-align: center;
-            padding: 30px;
+            padding: 40px;
             border-top: 1px solid #1e293b;
             color: #64748b;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Адаптивность для мобильных */
+        @media (max-width: 768px) {
+            header { padding: 15px 5%; flex-direction: column; gap: 10px; }
+            nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; }
+            nav a { margin: 0; font-size: 0.9rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
+            .section-container h2 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Фоновое видео (опционально, закомментируйте, если не нужно) -->
+    <video autoplay loop muted playsinline id="video-bg">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-blue-and-purple-server-network-nodes-transferring-data-smoothly-in-a-dark-digital-space-5134-large.mp4" type="video/mp4">
+    </video>
 
     <header>
         <div class="logo" onclick="openTab('home')">MyBrand</div>
@@ -208,58 +277,70 @@
 
     <main>
         <!-- Вкладка 1: Главная -->
-        <div id="home" class="tab-content active">
+        <div id="home" class="tab-content active fade-in">
             <section class="hero">
-                <h1>Современные IT-решения</h1>
-                <p>Создаём качественные, быстрые и надёжные веб-проекты под любые задачи.</p>
-                <a href="https://wa.me/77055554268" target="_blank" class="btn">💬 Написать в WhatsApp</a>
+                <h1 class="fade-in-up" style="animation-delay: 0.2s;">Современные IT-решения</h1>
+                <p class="fade-in-up" style="animation-delay: 0.4s;">Создаём качественные, быстрые и надёжные веб-проекты под любые задачи бизнеса.</p>
+                <div class="fade-in-up" style="animation-delay: 0.6s;">
+                    <a href="https://wa.me/77055554268" target="_blank" class="btn">💬 Написать в WhatsApp</a>
+                </div>
             </section>
         </div>
 
-        <!-- Вкладка 2: Услуги -->
-        <div id="services" class="tab-content">
+        <!-- Вкладка 2: Услуги (Галерея) -->
+        <div id="services" class="tab-content fade-in">
             <div class="section-container">
-                <h2>Наши Услуги</h2>
-                <div class="features" style="padding: 20px 0;">
-                    <div class="card">
-                        <h3>⚡ Быстрая загрузка</h3>
-                        <p>Оптимизированный код обеспечивает мгновенную работу сайта на любых устройствах.</p>
+                <h2>Что мы делаем</h2>
+                <div class="features">
+                    <div class="card fade-in-up" style="animation-delay: 0.1s;">
+                        <span class="card-icon">⚡</span>
+                        <h3>Веб-разработка</h3>
+                        <p>Создание лендингов, корпоративных сайтов и сложных веб-приложений с нуля.</p>
                     </div>
-                    <div class="card">
-                        <h3>📱 Адаптивность</h3>
-                        <p>Интерфейс идеально подстраивается под экраны смартфонов, планшетов и ПК.</p>
+                    <div class="card fade-in-up" style="animation-delay: 0.2s;">
+                        <span class="card-icon">📱</span>
+                        <h3>Адаптивный дизайн</h3>
+                        <p>Ваш сайт будет идеально выглядеть на смартфонах, планшетах и компьютерах.</p>
                     </div>
-                    <div class="card">
-                        <h3>🛠 Надёжность</h3>
-                        <p>Использование современных стандартов и проверенных технологий разработки.</p>
+                    <div class="card fade-in-up" style="animation-delay: 0.3s;">
+                        <span class="card-icon">🚀</span>
+                        <h3>Оптимизация скорости</h3>
+                        <p>Настройка кода для мгновенной загрузки и высокой производительности.</p>
+                    </div>
+                    <div class="card fade-in-up" style="animation-delay: 0.4s;">
+                        <span class="card-icon">🛠</span>
+                        <h3>Поддержка</h3>
+                        <p>Техническое обслуживание и развитие вашего проекта после запуска.</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <!-- Вкладка 3: О нас -->
-        <div id="about" class="tab-content">
+        <div id="about" class="tab-content fade-in">
             <div class="section-container">
-                <h2>О компании</h2>
-                <p>Мы занимаемся профессиональной разработкой и настройкой цифровых решений. Наша цель — помогать бизнесу и частным клиентам получать быстрые, удобные и функциональные сайты.</p>
-                <p>Каждый проект мы адаптируем под индивидуальные задачи клиента, гарантируя высокую скорость работы и сочную визуальную подачу.</p>
+                <h2>О нашей команде</h2>
+                <div class="text-block fade-in-up">
+                    <p>Мы — команда профессионалов, увлеченных созданием цифровых продуктов. Наша цель — помогать клиентам внедрять современные технологии для решения их бизнес-задач.</p>
+                    <p>Мы фокусируемся на качестве, скорости и удобстве использования каждого созданного нами сайта.</p>
+                </div>
             </div>
         </div>
 
         <!-- Вкладка 4: Контакты -->
-        <div id="contact" class="tab-content">
+        <div id="contact" class="tab-content fade-in">
             <div class="section-container">
                 <h2>Связаться с нами</h2>
-                <p>Вы можете написать нам напрямую или позвонить по указанному номеру:</p>
-                <div class="contact-box">
-                    <div class="contact-item">
-                        <strong>Телефон / WhatsApp:</strong> <a href="https://wa.me/77055554268" style="color: #38bdf8;">+7 (705) 555-42-68</a>
-                    </div>
-                    <div class="contact-item">
-                        <strong>График работы:</strong> Пн - Пт, с 9:00 до 18:00
-                    </div>
-                    <div style="margin-top: 20px;">
-                        <a href="https://wa.me/77055554268" target="_blank" class="btn">Открыть чат в WhatsApp</a>
+                <div class="text-block fade-in-up" style="text-align: center;">
+                    <p>Мы всегда готовы обсудить ваш проект и предложить лучшие решения.</p>
+                    <div class="contact-box">
+                        <div class="contact-item">
+                            <strong>Телефон / WhatsApp:</strong> <br>
+                            <a href="https://wa.me/77055554268" style="color: #38bdf8; font-size: 1.3rem;">+7 (705) 555-42-68</a>
+                        </div>
+                        <div style="margin-top: 25px;">
+                            <a href="https://wa.me/77055554268" target="_blank" class="btn">Открыть чат в WhatsApp</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -274,7 +355,13 @@
         function openTab(tabName) {
             // Скрываем все вкладки
             const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
+            contents.forEach(content => {
+                content.classList.remove('active');
+                // Перезапуск анимации при переключении
+                content.style.animation = 'none';
+                content.offsetHeight; /* trigger reflow */
+                content.style.animation = null;
+            });
 
             // Убираем подсветку со всех ссылок в шапке
             const navLinks = document.querySelectorAll('nav a');
