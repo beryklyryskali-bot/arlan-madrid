@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой Проект — Услуги и Анимации</title>
+    <title>IT & Network Services — Монтаж, Сети и Видеонаблюдение</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+    
     <style>
         * {
             box-sizing: border-box;
@@ -25,12 +28,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 8%;
-            background: rgba(15, 23, 42, 0.9);
-            backdrop-filter: blur(10px);
+            padding: 18px 8%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
             position: sticky;
             top: 0;
-            z-index: 1000; /* Очень высокий z-index */
+            z-index: 1000;
             border-bottom: 1px solid #1e293b;
         }
 
@@ -39,36 +42,34 @@
             font-weight: 700;
             color: #38bdf8;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
         }
 
         nav a {
             color: #94a3b8;
             text-decoration: none;
-            margin-left: 20px;
             font-weight: 500;
             cursor: pointer;
             transition: color 0.3s;
+            padding: 6px 12px;
+            border-radius: 6px;
         }
 
         nav a:hover, nav a.active {
             color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
         }
 
         main {
             flex: 1;
             position: relative;
-        }
-
-        /* Фоновое видео (опционально) */
-        #video-bg {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            z-index: -100;
-            opacity: 0.15; /* Очень прозрачное */
-            object-fit: cover;
         }
 
         /* Управление отображением вкладок */
@@ -84,21 +85,20 @@
 
         /* Анимации появления */
         .fade-in {
-            animation: fadeIn 0.6s ease-in-out forwards;
-            opacity: 0;
+            animation: fadeIn 0.5s ease-in-out forwards;
         }
 
         .fade-in-up {
-            animation: fadeInUp 0.6s ease-out forwards;
-            opacity: 0;
+            animation: fadeInUp 0.5s ease-out forwards;
         }
 
         @keyframes fadeIn {
+            from { opacity: 0; }
             to { opacity: 1; }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(15px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -109,164 +109,218 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 100px 20px;
-            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
+            padding: 90px 20px;
+            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 1) 100%);
         }
 
         .hero h1 {
-            font-size: 3.2rem;
+            font-size: 3rem;
             margin-bottom: 20px;
             background: linear-gradient(to right, #38bdf8, #818cf8);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            max-width: 800px;
         }
 
         .hero p {
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             color: #94a3b8;
             max-width: 650px;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .btn {
             background: #25d366;
             color: #0f172a;
-            padding: 14px 35px;
+            padding: 14px 32px;
             border: none;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             cursor: pointer;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             transition: transform 0.2s, background 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 14px rgba(37, 211, 102, 0.3);
         }
 
         .btn:hover {
             background: #1ebc57;
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.5);
         }
 
-        /* Услуги (Галерея карточек) */
+        .btn-outline {
+            background: transparent;
+            color: #38bdf8;
+            border: 2px solid #38bdf8;
+            box-shadow: none;
+        }
+
+        .btn-outline:hover {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.2);
+        }
+
+        /* Секции и карточки */
         .section-container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 60px 20px;
         }
 
-        .section-container h2 {
-            font-size: 2.5rem;
-            margin-bottom: 40px;
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 12px;
             color: #38bdf8;
             text-align: center;
         }
 
-        .features {
+        .section-subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
         }
 
         .card {
-            background: rgba(30, 41, 59, 0.6);
-            backdrop-filter: blur(5px);
-            padding: 40px;
-            border-radius: 16px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 35px 25px;
+            border-radius: 14px;
             border: 1px solid #334155;
             transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-            cursor: pointer;
         }
 
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-5px);
             border-color: #38bdf8;
-            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.15);
+            box-shadow: 0 8px 25px rgba(56, 189, 248, 0.15);
         }
 
         .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
             display: block;
         }
 
         .card h3 {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             color: #f1f5f9;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
 
         .card p {
             color: #94a3b8;
-            font-size: 1rem;
+            font-size: 0.98rem;
         }
 
-        /* Текстовые секции */
-        .text-block {
-            max-width: 800px;
-            margin: 0 auto;
-            background: rgba(30, 41, 59, 0.4);
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid #1e293b;
-        }
-
-        .text-block p {
-            color: #cbd5e1;
-            font-size: 1.15rem;
-            margin-bottom: 25px;
-        }
-
-        .contact-box {
-            background: #1e293b;
-            padding: 30px;
-            border-radius: 12px;
+        /* Текстовый блок / Форма */
+        .content-box {
+            background: rgba(30, 41, 59, 0.5);
             border: 1px solid #334155;
-            margin-top: 30px;
-            text-align: center;
+            padding: 35px;
+            border-radius: 14px;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
-        .contact-item {
-            margin-bottom: 15px;
-            font-size: 1.2rem;
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
         }
 
-        .contact-item strong {
-            color: #f1f5f9;
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #f8fafc;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #38bdf8;
+        }
+
+        /* Плавающая кнопка WhatsApp */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            z-index: 2000;
+            text-decoration: none;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            background: #1ebc57;
         }
 
         footer {
             text-align: center;
-            padding: 40px;
+            padding: 35px;
             border-top: 1px solid #1e293b;
             color: #64748b;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-top: auto;
             position: relative;
             z-index: 10;
         }
 
-        /* Адаптивность для мобильных */
         @media (max-width: 768px) {
-            header { padding: 15px 5%; flex-direction: column; gap: 10px; }
-            nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 10px; }
-            nav a { margin: 0; font-size: 0.9rem; }
+            header { padding: 15px 5%; flex-direction: column; gap: 12px; }
+            nav { width: 100%; justify-content: center; gap: 8px; flex-wrap: wrap; }
+            nav a { font-size: 0.9rem; padding: 4px 8px; }
             .hero h1 { font-size: 2.2rem; }
             .hero p { font-size: 1rem; }
-            .section-container h2 { font-size: 2rem; }
+            .section-title { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Фоновое видео (опционально, закомментируйте, если не нужно) -->
-    <video autoplay loop muted playsinline id="video-bg">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-glowing-blue-and-purple-server-network-nodes-transferring-data-smoothly-in-a-dark-digital-space-5134-large.mp4" type="video/mp4">
-    </video>
-
     <header>
-        <div class="logo" onclick="openTab('home')">MyBrand</div>
+        <div class="logo" onclick="openTab('home')">
+            <span>⚡</span> TechService
+        </div>
         <nav>
             <a id="nav-home" class="active" onclick="openTab('home')">Главная</a>
             <a id="nav-services" onclick="openTab('services')">Услуги</a>
@@ -279,38 +333,64 @@
         <!-- Вкладка 1: Главная -->
         <div id="home" class="tab-content active fade-in">
             <section class="hero">
-                <h1 class="fade-in-up" style="animation-delay: 0.2s;">Современные IT-решения</h1>
-                <p class="fade-in-up" style="animation-delay: 0.4s;">Создаём качественные, быстрые и надёжные веб-проекты под любые задачи бизнеса.</p>
-                <div class="fade-in-up" style="animation-delay: 0.6s;">
+                <h1 class="fade-in-up">Профессиональные IT-услуги и Сетевые Решения</h1>
+                <p class="fade-in-up">Проектирование и монтаж локальных сетей, установка видеонаблюдения, настройка серверов и техническая поддержка.</p>
+                <div class="hero-btns fade-in-up">
                     <a href="https://wa.me/77055554268" target="_blank" class="btn">💬 Написать в WhatsApp</a>
+                    <a onclick="openTab('services')" class="btn btn-outline">Наши Услуги</a>
+                </div>
+            </section>
+
+            <section class="section-container">
+                <h2 class="section-title">Почему выбирают нас</h2>
+                <p class="section-subtitle">Надёжность, качество оборудования и системный подход к каждой задаче</p>
+                
+                <div class="grid-cards">
+                    <div class="card">
+                        <span class="card-icon">🎯</span>
+                        <h3>Точный расчёт</h3>
+                        <p>Индивидуальный подбор сетевого оборудования и камер под ваш бюджет и параметры объекта.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">⚡</span>
+                        <h3>Быстрый монтаж</h3>
+                        <p>Профессиональная прокладка кабелей, сборка стойки и пусконаладка в сжатые сроки.</p>
+                    </div>
+                    <div class="card">
+                        <span class="card-icon">🔒</span>
+                        <h3>Гарантия качества</h3>
+                        <p>Используем только проверенные комплектующие и обеспечиваем постгарантийное обслуживание.</p>
+                    </div>
                 </div>
             </section>
         </div>
 
-        <!-- Вкладка 2: Услуги (Галерея) -->
+        <!-- Вкладка 2: Услуги -->
         <div id="services" class="tab-content fade-in">
             <div class="section-container">
-                <h2>Что мы делаем</h2>
-                <div class="features">
-                    <div class="card fade-in-up" style="animation-delay: 0.1s;">
-                        <span class="card-icon">⚡</span>
-                        <h3>Веб-разработка</h3>
-                        <p>Создание лендингов, корпоративных сайтов и сложных веб-приложений с нуля.</p>
+                <h2 class="section-title">Услуги и Направления</h2>
+                <p class="section-subtitle">Полный спектр работ по IT-инфраструктуре</p>
+
+                <div class="grid-cards">
+                    <div class="card">
+                        <span class="card-icon">🌐</span>
+                        <h3>Монтаж Локальных Сетей (ЛВС)</h3>
+                        <p>Прокладка UTP/STP кабеля, установка кабель-каналов, монтаж патч-панелей и настройка коммутаторов (Switches).</p>
                     </div>
-                    <div class="card fade-in-up" style="animation-delay: 0.2s;">
-                        <span class="card-icon">📱</span>
-                        <h3>Адаптивный дизайн</h3>
-                        <p>Ваш сайт будет идеально выглядеть на смартфонах, планшетах и компьютерах.</p>
+                    <div class="card">
+                        <span class="card-icon">📹</span>
+                        <h3>Системы Видеонаблюдения</h3>
+                        <p>Установка и настройка IP/NVR/DVR видеокамер, удаленный доступ с телефона и архивация записей.</p>
                     </div>
-                    <div class="card fade-in-up" style="animation-delay: 0.3s;">
-                        <span class="card-icon">🚀</span>
-                        <h3>Оптимизация скорости</h3>
-                        <p>Настройка кода для мгновенной загрузки и высокой производительности.</p>
+                    <div class="card">
+                        <span class="card-icon">💻</span>
+                        <h3>Настройка Рабочих Мест</h3>
+                        <p>Подключение ПК, офисной техники, настройка роутеров, сетевых принтеров и общего доступа к данным.</p>
                     </div>
-                    <div class="card fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="card">
                         <span class="card-icon">🛠</span>
-                        <h3>Поддержка</h3>
-                        <p>Техническое обслуживание и развитие вашего проекта после запуска.</p>
+                        <h3>Диагностика и Обслуживание</h3>
+                        <p>Поиск обрывов сети, ремонт платы/компонентов, модернизация устаревшего оборудования.</p>
                     </div>
                 </div>
             </div>
@@ -319,10 +399,16 @@
         <!-- Вкладка 3: О нас -->
         <div id="about" class="tab-content fade-in">
             <div class="section-container">
-                <h2>О нашей команде</h2>
-                <div class="text-block fade-in-up">
-                    <p>Мы — команда профессионалов, увлеченных созданием цифровых продуктов. Наша цель — помогать клиентам внедрять современные технологии для решения их бизнес-задач.</p>
-                    <p>Мы фокусируемся на качестве, скорости и удобстве использования каждого созданного нами сайта.</p>
+                <h2 class="section-title">О Нашей Работе</h2>
+                <p class="section-subtitle">Опыт и профессиональный подход к сетевым технологиям</p>
+                
+                <div class="content-box">
+                    <p style="margin-bottom: 20px; color: #cbd5e1; font-size: 1.05rem;">
+                        Мы специализируемся на проектировании, монтаже и настройке физической и сетевой инфраструктуры для офисов, частных домов и коммерческих объектов.
+                    </p>
+                    <p style="color: #cbd5e1; font-size: 1.05rem;">
+                        Наша цель — обеспечивать стабильную, бесперебойную работу вашего оборудования и безопасный удалённый доступ к системам из любой точки мира.
+                    </p>
                 </div>
             </div>
         </div>
@@ -330,46 +416,71 @@
         <!-- Вкладка 4: Контакты -->
         <div id="contact" class="tab-content fade-in">
             <div class="section-container">
-                <h2>Связаться с нами</h2>
-                <div class="text-block fade-in-up" style="text-align: center;">
-                    <p>Мы всегда готовы обсудить ваш проект и предложить лучшие решения.</p>
-                    <div class="contact-box">
-                        <div class="contact-item">
-                            <strong>Телефон / WhatsApp:</strong> <br>
-                            <a href="https://wa.me/77055554268" style="color: #38bdf8; font-size: 1.3rem;">+7 (705) 555-42-68</a>
+                <h2 class="section-title">Связаться с нами</h2>
+                <p class="section-subtitle">Оставьте заявку или напишите напрямую в мессенджер</p>
+
+                <div class="content-box" style="text-align: center;">
+                    <p style="font-size: 1.2rem; margin-bottom: 20px; color: #f1f5f9;">
+                        Прямая связь по телефону и WhatsApp:
+                    </p>
+                    <a href="https://wa.me/77055554268" target="_blank" class="btn" style="font-size: 1.2rem; padding: 16px 40px; margin-bottom: 30px;">
+                        💬 Написать в WhatsApp (+7 705 555-42-68)
+                    </a>
+
+                    <form onsubmit="handleFormSubmit(event)" style="margin-top: 30px; border-top: 1px solid #334155; padding-top: 30px;">
+                        <h3 style="margin-bottom: 20px; color: #38bdf8;">Заказать консультацию</h3>
+                        <div class="form-group">
+                            <label>Ваше имя</label>
+                            <input type="text" id="name" placeholder="Введите имя" required>
                         </div>
-                        <div style="margin-top: 25px;">
-                            <a href="https://wa.me/77055554268" target="_blank" class="btn">Открыть чат в WhatsApp</a>
+                        <div class="form-group">
+                            <label>Номер телефона</label>
+                            <input type="tel" id="phone" placeholder="+7 (700) 000-00-00" required>
                         </div>
-                    </div>
+                        <div class="form-group">
+                            <label>Что вас интересует?</label>
+                            <textarea id="message" rows="4" placeholder="Опишите задачу (например, нужен монтаж сети на 5 ПК)"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-outline" style="width: 100%; justify-content: center;">Отправить заявку</button>
+                    </form>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Плавающая кнопка WhatsApp -->
+    <a href="https://wa.me/77055554268" class="whatsapp-float" target="_blank" title="Написать в WhatsApp">
+        💬
+    </a>
+
     <footer>
-        &copy; 2026 MyBrand. Все права защищены.
+        &copy; 2026 TechService. Все права защищены.
     </footer>
 
     <script>
         function openTab(tabName) {
-            // Скрываем все вкладки
             const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => {
-                content.classList.remove('active');
-                // Перезапуск анимации при переключении
-                content.style.animation = 'none';
-                content.offsetHeight; /* trigger reflow */
-                content.style.animation = null;
-            });
+            contents.forEach(content => content.classList.remove('active'));
 
-            // Убираем подсветку со всех ссылок в шапке
             const navLinks = document.querySelectorAll('nav a');
             navLinks.forEach(link => link.classList.remove('active'));
 
-            // Показываем нужную вкладку и подсвечиваем активный пункт
             document.getElementById(tabName).classList.add('active');
             document.getElementById('nav-' + tabName).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const message = document.getElementById('message').value;
+
+            const text = `Здравствуйте! Меня зовут ${name}. Телефон: ${phone}. Задача: ${message}`;
+            const encodedText = encodeURIComponent(text);
+            
+            // Перенаправление в WhatsApp с заготовленным текстом заявки
+            window.open(`https://wa.me/77055554268?text=${encodedText}`, '_blank');
         }
     </script>
 </body>
