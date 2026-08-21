@@ -16,6 +16,9 @@
             background-color: #0f172a;
             color: #f8fafc;
             line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
@@ -23,7 +26,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 8%;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.9);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
@@ -35,31 +38,54 @@
             font-size: 1.5rem;
             font-weight: 700;
             color: #38bdf8;
+            cursor: pointer;
         }
 
         nav a {
             color: #94a3b8;
             text-decoration: none;
             margin-left: 20px;
+            font-weight: 500;
+            cursor: pointer;
             transition: color 0.3s;
         }
 
-        nav a:hover {
+        nav a:hover, nav a.active {
             color: #38bdf8;
         }
 
+        main {
+            flex: 1;
+        }
+
+        /* Управление отображением вкладок */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Герой-блок */
         .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 100px 20px;
+            padding: 80px 20px;
             background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin-bottom: 20px;
             background: linear-gradient(to right, #38bdf8, #818cf8);
             -webkit-background-clip: text;
@@ -74,27 +100,30 @@
         }
 
         .btn {
-            background: #38bdf8;
+            background: #25d366;
             color: #0f172a;
             padding: 12px 30px;
             border: none;
             border-radius: 8px;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
             transition: transform 0.2s, background 0.3s;
         }
 
         .btn:hover {
-            background: #0284c7;
+            background: #1ebc57;
             transform: translateY(-2px);
         }
 
+        /* Карточки */
         .features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
-            padding: 80px 8%;
+            padding: 60px 8%;
         }
 
         .card {
@@ -120,6 +149,42 @@
             font-size: 0.95rem;
         }
 
+        /* Текстовые секции */
+        .section-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-container h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: #38bdf8;
+        }
+
+        .section-container p {
+            color: #94a3b8;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-box {
+            background: #1e293b;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+            margin-top: 20px;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .contact-item strong {
+            color: #f1f5f9;
+        }
+
         footer {
             text-align: center;
             padding: 30px;
@@ -132,42 +197,92 @@
 <body>
 
     <header>
-        <div class="logo">MyBrand</div>
+        <div class="logo" onclick="openTab('home')">MyBrand</div>
         <nav>
-            <a href="#features">Услуги</a>
-            <a href="#about">О нас</a>
-            <a href="#contact">Контакты</a>
+            <a id="nav-home" class="active" onclick="openTab('home')">Главная</a>
+            <a id="nav-services" onclick="openTab('services')">Услуги</a>
+            <a id="nav-about" onclick="openTab('about')">О нас</a>
+            <a id="nav-contact" onclick="openTab('contact')">Контакты</a>
         </nav>
     </header>
 
-    <section class="hero">
-        <h1>Современные IT-решения</h1>
-        <p>Создаём качественные, быстрые и надёжные веб-проекты под любые задачи.</p>
-        <a href="https://wa.me/77055554268" target="_blank" class="btn" style="text-decoration: none; display: inline-block;">Связаться с нами</a>
-    </section>
+    <main>
+        <!-- Вкладка 1: Главная -->
+        <div id="home" class="tab-content active">
+            <section class="hero">
+                <h1>Современные IT-решения</h1>
+                <p>Создаём качественные, быстрые и надёжные веб-проекты под любые задачи.</p>
+                <a href="https://wa.me/77055554268" target="_blank" class="btn">💬 Написать в WhatsApp</a>
+            </section>
+        </div>
 
-    <section class="features" id="features">
-        <div class="card">
-            <h3>⚡ Быстрая загрузка</h3>
-            <p>Оптимизированный код обеспечивает мгновенную работу сайта на любых устройствах.</p>
+        <!-- Вкладка 2: Услуги -->
+        <div id="services" class="tab-content">
+            <div class="section-container">
+                <h2>Наши Услуги</h2>
+                <div class="features" style="padding: 20px 0;">
+                    <div class="card">
+                        <h3>⚡ Быстрая загрузка</h3>
+                        <p>Оптимизированный код обеспечивает мгновенную работу сайта на любых устройствах.</p>
+                    </div>
+                    <div class="card">
+                        <h3>📱 Адаптивность</h3>
+                        <p>Интерфейс идеально подстраивается под экраны смартфонов, планшетов и ПК.</p>
+                    </div>
+                    <div class="card">
+                        <h3>🛠 Надёжность</h3>
+                        <p>Использование современных стандартов и проверенных технологий разработки.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card">
-            <h3>📱 Адаптивность</h3>
-            <p>Интерфейс идеально подстраивается под экраны смартфонов, планшетов и ПК.</p>
+
+        <!-- Вкладка 3: О нас -->
+        <div id="about" class="tab-content">
+            <div class="section-container">
+                <h2>О компании</h2>
+                <p>Мы занимаемся профессиональной разработкой и настройкой цифровых решений. Наша цель — помогать бизнесу и частным клиентам получать быстрые, удобные и функциональные сайты.</p>
+                <p>Каждый проект мы адаптируем под индивидуальные задачи клиента, гарантируя высокую скорость работы и сочную визуальную подачу.</p>
+            </div>
         </div>
-        <div class="card">
-            <h3>🛠 Надёжность</h3>
-            <p>Использование современных стандартов и проверенных технологий разработки.</p>
+
+        <!-- Вкладка 4: Контакты -->
+        <div id="contact" class="tab-content">
+            <div class="section-container">
+                <h2>Связаться с нами</h2>
+                <p>Вы можете написать нам напрямую или позвонить по указанному номеру:</p>
+                <div class="contact-box">
+                    <div class="contact-item">
+                        <strong>Телефон / WhatsApp:</strong> <a href="https://wa.me/77055554268" style="color: #38bdf8;">+7 (705) 555-42-68</a>
+                    </div>
+                    <div class="contact-item">
+                        <strong>График работы:</strong> Пн - Пт, с 9:00 до 18:00
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <a href="https://wa.me/77055554268" target="_blank" class="btn">Открыть чат в WhatsApp</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+    </main>
 
     <footer>
         &copy; 2026 MyBrand. Все права защищены.
     </footer>
 
     <script>
-        function handleClick() {
-            alert('Спасибо за клик! Здесь можно настроить переход к форме или чату.');
+        function openTab(tabName) {
+            // Скрываем все вкладки
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            // Убираем подсветку со всех ссылок в шапке
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => link.classList.remove('active'));
+
+            // Показываем нужную вкладку и подсвечиваем активный пункт
+            document.getElementById(tabName).classList.add('active');
+            document.getElementById('nav-' + tabName).classList.add('active');
         }
     </script>
 </body>
