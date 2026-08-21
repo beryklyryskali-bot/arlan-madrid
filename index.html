@@ -1,150 +1,174 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta name="google-site-verification" content="e15BVPA7TtIyM7yTL6VRkwIQLF7IdcORyVLAKSoDexY" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Арлан Мадрид</title>
+    <title>Мой Проект</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #0f172a;
-            color: #ffffff;
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            line-height: 1.6;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 8%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #1e293b;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #38bdf8;
+        }
+
+        nav a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #38bdf8;
+        }
+
+        .hero {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
         }
 
-        h1 {
-            color: #f59e0b;
+        .hero h1 {
+            font-size: 3rem;
             margin-bottom: 20px;
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* Форма ввода пароля */
-        #login-box {
-            background-color: #1e293b;
+        .hero p {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: #38bdf8;
+            color: #0f172a;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .btn:hover {
+            background: #0284c7;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 80px 8%;
+        }
+
+        .card {
+            background: #1e293b;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border: 1px solid #334155;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #f1f5f9;
+        }
+
+        .card p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        footer {
             text-align: center;
-            max-width: 350px;
-            width: 100%;
-            margin-top: 50px;
-        }
-
-        input[type="password"] {
-            width: 80%;
-            padding: 10px;
-            margin: 15px 0;
-            border-radius: 6px;
-            border: 1px solid #475569;
-            background-color: #0f172a;
-            color: white;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        button {
-            background-color: #f59e0b;
-            color: #0f172a;
-            border: none;
-            padding: 10px 20px;
-            font-weight: bold;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            background-color: #d97706;
-        }
-
-        #error-msg {
-            color: #ef4444;
-            margin-top: 10px;
-            display: none;
-        }
-
-        /* Контент сайта (скрыт до ввода пароля) */
-        #protected-content {
-            display: none;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .gallery img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 10px;
-            border: 2px solid #334155;
-            transition: transform 0.3s;
-        }
-
-        .gallery img:hover {
-            transform: scale(1.03);
+            padding: 30px;
+            border-top: 1px solid #1e293b;
+            color: #64748b;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Окно авторизации -->
-    <div id="login-box">
-        <h2>Арлан Мадрид</h2>
-        <p>Введите пароль для доступа к галерее:</p>
-        <input type="password" id="password-input" placeholder="Пароль">
-        <br>
-        <button onclick="checkPassword()">Войти</button>
-        <p id="error-msg">Неверный пароль!</p>
-    </div>
+    <header>
+        <div class="logo">MyBrand</div>
+        <nav>
+            <a href="#features">Услуги</a>
+            <a href="#about">О нас</a>
+            <a href="#contact">Контакты</a>
+        </nav>
+    </header>
 
-    <!-- Защищенное содержимое -->
-    <div id="protected-content">
-        <h1>Арлан Мадрид — Галерея</h1>
-        <p>Добро пожаловать в приватный архив фотографий.</p>
+    <section class="hero">
+        <h1>Современные IT-решения</h1>
+        <p>Создаём качественные, быстрые и надёжные веб-проекты под любые задачи.</p>
+        <button class="btn" onclick="handleClick()">Связаться с нами</button>
+    </section>
 
-        <div class="gallery">
-            <!-- Добавляйте сюда ваши фото из папки images -->
-            <img src="images/photo1.jpg" alt="Фото 1">
-            <img src="images/photo2.jpg" alt="Фото 2">
-            <img src="images/photo3.jpg" alt="Фото 3">
+    <section class="features" id="features">
+        <div class="card">
+            <h3>⚡ Быстрая загрузка</h3>
+            <p>Оптимизированный код обеспечивает мгновенную работу сайта на любых устройствах.</p>
         </div>
-    </div>
+        <div class="card">
+            <h3>📱 Адаптивность</h3>
+            <p>Интерфейс идеально подстраивается под экраны смартфонов, планшетов и ПК.</p>
+        </div>
+        <div class="card">
+            <h3>🛠 Надёжность</h3>
+            <p>Использование современных стандартов и проверенных технологий разработки.</p>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2026 MyBrand. Все права защищены.
+    </footer>
 
     <script>
-        // Установите ваш пароль здесь:
-        const CORRECT_PASSWORD = "1234"; 
-
-        function checkPassword() {
-            const input = document.getElementById("password-input").value;
-            const error = document.getElementById("error-msg");
-            const loginBox = document.getElementById("login-box");
-            const content = document.getElementById("protected-content");
-
-            if (input === CORRECT_PASSWORD) {
-                loginBox.style.display = "none";
-                content.style.display = "block";
-            } else {
-                error.style.display = "block";
-            }
+        function handleClick() {
+            alert('Спасибо за клик! Здесь можно настроить переход к форме или чату.');
         }
-
-        // Вход по нажатию Enter
-        document.getElementById("password-input").addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                checkPassword();
-            }
-        });
     </script>
 </body>
 </html>
